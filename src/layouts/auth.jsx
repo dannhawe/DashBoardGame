@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import {
   ChartPieIcon,
   UserIcon,
@@ -34,9 +34,9 @@ export function Auth() {
 
   return (
     <div className="relative min-h-screen w-full">
-      <div className="container relative z-40 mx-auto p-4">
+      {/* <div className="container relative z-40 mx-auto p-4">
         <Navbar routes={navbarRoutes} />
-      </div>
+      </div> */}
       <Routes>
         {routes.map(
           ({ layout, pages }) =>
@@ -45,10 +45,12 @@ export function Auth() {
               <Route exact path={path} element={element} />
             ))
         )}
+        <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
+        
       </Routes>
-      <div className="container absolute bottom-8 left-2/4 z-10 mx-auto -translate-x-2/4 text-white">
+      {/* <div className="container absolute bottom-8 left-2/4 z-10 mx-auto -translate-x-2/4 text-white">
         <Footer />
-      </div>
+      </div> */}
     </div>
   );
 }

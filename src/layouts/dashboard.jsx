@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
 import {
@@ -16,12 +16,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
-      <Sidenav
-        routes={routes}
-        brandImg={
-          sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
-        }
-      />
+      <Sidenav routes={routes} brandImg={"/img/dashBoard/logo.png"} />
       <div className="p-4 xl:ml-80">
         <DashboardNavbar />
         <Configurator />
@@ -42,10 +37,11 @@ export function Dashboard() {
                 <Route exact path={path} element={element} />
               ))
           )}
+          <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
         </Routes>
-        <div className="text-blue-gray-600">
+        {/* <div className="text-blue-gray-600">
           <Footer />
-        </div>
+        </div> */}
       </div>
     </div>
   );

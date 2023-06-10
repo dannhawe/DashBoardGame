@@ -10,6 +10,7 @@ import {
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
 
 export function Sidenav({ brandImg, brandName, routes }) {
+  console.log("brandName", brandName);
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
   const sidenavTypes = {
@@ -29,14 +30,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
           sidenavType === "dark" ? "border-white/20" : "border-blue-gray-50"
         }`}
       >
-        <Link to="/" className="flex items-center gap-4 py-6 px-8">
-          <Avatar src={brandImg} size="sm" />
-          <Typography
-            variant="h6"
-            color={sidenavType === "dark" ? "white" : "blue-gray"}
-          >
-            {brandName}
-          </Typography>
+        <Link to="/" className="flex items-center gap-4 py-8 px-12">
+          <img src={brandImg} size="sm" />
         </Link>
         <IconButton
           variant="text"
@@ -100,7 +95,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
 Sidenav.defaultProps = {
   brandImg: "/img/logo-ct.png",
-  brandName: "Material Tailwind React",
+  brandName: "BO88",
 };
 
 Sidenav.propTypes = {
