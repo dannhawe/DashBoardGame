@@ -46,7 +46,6 @@ export function Auth() {
             ))
         )}
         <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
-        
       </Routes>
       {/* <div className="container absolute bottom-8 left-2/4 z-10 mx-auto -translate-x-2/4 text-white">
         <Footer />

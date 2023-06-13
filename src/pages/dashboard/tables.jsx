@@ -164,7 +164,7 @@ export function Tables() {
       setting: `	2023-06-12 02:07:20`,
     });
   }
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [dataRender, setDataRender] = useState({
     title: "",
     component: <></>,
