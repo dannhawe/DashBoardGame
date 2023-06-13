@@ -9,8 +9,14 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-
+import { useForm } from "react-hook-form";
 export function SignUp() {
+
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = data => {
+    console.log(data)
+  };
   return (
     <>
       <img
@@ -18,9 +24,9 @@ export function SignUp() {
         className="absolute inset-0 z-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 z-0 h-full w-full bg-black/50" />
-      <div className="container mx-auto p-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="container mx-auto p-4">
         <Card className="absolute top-2/4 left-2/4 w-full max-w-[24rem] -translate-y-2/4 -translate-x-2/4">
-          <CardHeader
+          <CardHeader rdHeader
             variant="gradient"
             color="blue"
             className="mb-4 grid h-28 place-items-center"
@@ -30,15 +36,23 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" />
-            <Input type="email" label="Email" size="lg" />
-            <Input type="password" label="Password" size="lg" />
+            <Input  {...register("name", { required: true, maxLength: 20 })} label="Name" size="lg" />
+            <p>{errors.name?.message}</p>
+            <Input type="password" label="Password" size="lg" ref={register({
+              required: "You must specify a password",
+              minLength: {
+                value: 8,
+                message: "Password must have at least 8 characters"
+              }
+            })} />
+            <p>{errors.password?.message}</p>
+
             <div className="-ml-2.5">
               <Checkbox label="I agree the Terms and Conditions" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button type="submit" variant="gradient" fullWidth>
               Sign Up
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
@@ -56,7 +70,7 @@ export function SignUp() {
             </Typography>
           </CardFooter>
         </Card>
-      </div>
+      </form>
     </>
   );
 }
