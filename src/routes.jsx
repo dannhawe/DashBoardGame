@@ -31,17 +31,23 @@ export const routes = [
       },
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "tables",
-        path: "/tables",
+        name: "Quản lý user",
+        path: "/quanlyhoso",
         element: <Tables />,
       },
       {
-        icon: <BellIcon {...icon} />,
-        name: "notifactions",
-        path: "/notifactions",
-        element: <Notifications />,
+        icon: <TableCellsIcon {...icon} />,
+        name: "Quản lý đại lý",
+        path: "/quanlyhoso1",
+        element: <Tables />,
       },
-      
+
+      // {
+      //   icon: <BellIcon {...icon} />,
+      //   name: "notifactions",
+      //   path: "/notifactions",
+      //   element: <Notifications />,
+      // },
     ],
   },
   {

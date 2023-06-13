@@ -25,13 +25,15 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "@/context";
+import routes from "@/routes";
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
-
+  const routerPage = routes.find((item) => item.layout === layout);
+  const namePage = routerPage.pages.find((item) => item.path.includes(page));
   return (
     <Navbar
       color={fixedNavbar ? "white" : "transparent"}
@@ -64,12 +66,9 @@ export function DashboardNavbar() {
               color="blue-gray"
               className="font-normal"
             >
-              {page}
+              {namePage.name}
             </Typography>
           </Breadcrumbs>
-          <Typography variant="h6" color="blue-gray">
-            {page}
-          </Typography>
         </div>
         <div className="flex items-center">
           <IconButton
