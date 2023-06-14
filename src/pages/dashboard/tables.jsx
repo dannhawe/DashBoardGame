@@ -198,7 +198,7 @@ export function Tables() {
             dataSource={data}
             scroll={{
               x: 1500,
-              y: 500,
+              y: 430,
             }}
           />
         </div>
