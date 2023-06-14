@@ -1,219 +1,221 @@
+import { Card, CardHeader, Typography, Input } from "@material-tailwind/react";
+import {} from "@heroicons/react/24/outline";
+import { DatePicker, Drawer, Table, Tooltip } from "antd";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Avatar,
-  Chip,
-  Tooltip,
-  Progress,
-} from "@material-tailwind/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { authorsTableData, projectsTableData } from "@/data";
-
+  DeleteOutlined,
+  EditOutlined,
+  MoneyCollectOutlined,
+  SettingOutlined,
+  UpCircleOutlined,
+} from "@ant-design/icons";
+import { useState } from "react";
+import EditPage from "./component/EditPage";
+import ChangeCoin from "./component/ChangeCoin";
+import Daily from "./component/Daily";
+import PhanPhoiDaiLy from "./component/PhanPhoiDaiLy";
+const isMobile = window.innerWidth < 500;
 export function Tables() {
+  const columns = [
+    {
+      title: "Full Name",
+      dataIndex: "name",
+      key: "name",
+      fixed: "left",
+    },
+    {
+      title: "Số dư ví chính",
+      width: 100,
+      dataIndex: "money",
+      key: "amoneyge",
+      sorter: (a, b) => a.money - b.money,
+      sortDirections: ["descend"],
+    },
+    {
+      title: "Số dư ví hoàn trả",
+      dataIndex: "money2",
+      key: "1",
+      width: 100,
+      sorter: (a, b) => a.money2 - b.money2,
+      sortDirections: ["descend"],
+    },
+    {
+      title: "Đăng ký IP.",
+      dataIndex: "ip",
+      key: "2",
+      width: 150,
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "3",
+      width: 100,
+      sorter: (a, b) => a.status.length - b.status.length,
+    },
+
+    {
+      title: "Tài khoản nội bộ ",
+      dataIndex: "account",
+      key: "4",
+      width: 100,
+      sorter: (a, b) => a.account.length - b.account.length,
+
+      onFilter: (value, record) => record.account.indexOf(value) === 0,
+    },
+    {
+      title: "Ngôn ngữ/Tiền tệ",
+      dataIndex: "nn",
+      key: "5",
+      width: 150,
+    },
+    {
+      title: "Đại lý/cấp trên",
+      dataIndex: "dl",
+      key: "6",
+      width: 150,
+    },
+    {
+      title: "Trực tuyến",
+      dataIndex: "tt",
+      key: "7",
+      width: 100,
+      sorter: (a, b) => a.tt.length - b.tt.length,
+    },
+    {
+      title: "Địa chỉ IP lần cuối đăng nhập.",
+      dataIndex: "iplast",
+      key: "8",
+    },
+    {
+      title: "Cài đặt thời gian",
+      dataIndex: "setting",
+      key: "9",
+    },
+
+    {
+      title: "Action",
+      key: "action",
+      fixed: isMobile ? "" : "right",
+      width: 150,
+      render: () => (
+        <div className="grid grid-cols-3 gap-1">
+          <span
+            onClick={() => {
+              handleDataRender("Chỉnh sửa", <EditPage />, "70%");
+            }}
+            className="flex-center  cursor-pointer rounded-md bg-gray-200 p-1"
+          >
+            <Tooltip title="Chỉnh sửa">
+              <EditOutlined className="text-blue-600" />
+            </Tooltip>
+          </span>
+          <span
+            onClick={() => {
+              handleDataRender("Thay đổi số dư", <ChangeCoin />, "70%");
+            }}
+            className="flex-center  cursor-pointer rounded-md bg-gray-200 p-1"
+          >
+            <Tooltip title="Thay đổi số dư">
+              <MoneyCollectOutlined className="text-yellow-800" />
+            </Tooltip>
+          </span>
+          <span
+            onClick={() => {
+              handleDataRender("Phân phối đại lý", <Daily />, "40%");
+            }}
+            className="flex-center  cursor-pointer rounded-md bg-gray-200 p-1"
+          >
+            <Tooltip title="Phân phối đại lý">
+              <UpCircleOutlined className="text-green-700" />
+            </Tooltip>
+          </span>
+          <span
+            onClick={() => {
+              handleDataRender("Thiết lập  đại lý", <PhanPhoiDaiLy />, "40%");
+            }}
+            className="flex-center  cursor-pointer rounded-md bg-gray-200 p-1"
+          >
+            <Tooltip title=" Thiết lập đại lý">
+              <SettingOutlined className="text-black" />
+            </Tooltip>
+          </span>
+          <span className="flex-center  cursor-pointer rounded-md bg-gray-200 p-1">
+            <Tooltip title="Xóa bỏ">
+              <DeleteOutlined className="text-red-700" />
+            </Tooltip>
+          </span>
+        </div>
+      ),
+    },
+  ];
+  const data = [];
+  for (let i = 0; i < 100; i++) {
+    data.push({
+      key: i,
+      name: `Edward ${i}`,
+      money: 10.003 + i,
+      money2: 12.003 + i,
+      ip: `37.19.205.233 ${i}`,
+      status: i % 2 === 0 ? "Online" : "Offline",
+      account: i % 2 === 0 ? "Không" : "Có",
+      nn: "Viet Nam",
+      dl: i % 2 === 0 ? "Không" : `Edward ${i}`,
+      tt: i % 2 === 0 ? "online" : "offline",
+      iplast: `37.19.205.233 ${i}`,
+      setting: `	2023-06-12 02:07:20`,
+    });
+  }
+  const [openModal, setOpenModal] = useState(false);
+  const [dataRender, setDataRender] = useState({
+    title: "",
+    component: <></>,
+    width: "70%",
+  });
+  const handleDataRender = (title, component, width) => {
+    setDataRender({
+      component,
+      title,
+      width,
+    });
+    setOpenModal(true);
+  };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
         <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
           <Typography variant="h6" color="white">
-            Authors Table
+            Danh sách thành viên
           </Typography>
         </CardHeader>
-        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-          <table className="w-full min-w-[640px] table-auto">
-            <thead>
-              <tr>
-                {["author", "function", "status", "employed", ""].map((el) => (
-                  <th
-                    key={el}
-                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
-                  >
-                    <Typography
-                      variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
-                    >
-                      {el}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {authorsTableData.map(
-                ({ img, name, email, job, online, date }, key) => {
-                  const className = `py-3 px-5 ${
-                    key === authorsTableData.length - 1
-                      ? ""
-                      : "border-b border-blue-gray-50"
-                  }`;
-
-                  return (
-                    <tr key={name}>
-                      <td className={className}>
-                        <div className="flex items-center gap-4">
-                          <Avatar src={img} alt={name} size="sm" />
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-semibold"
-                            >
-                              {name}
-                            </Typography>
-                            <Typography className="text-xs font-normal text-blue-gray-500">
-                              {email}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {job[0]}
-                        </Typography>
-                        <Typography className="text-xs font-normal text-blue-gray-500">
-                          {job[1]}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Chip
-                          variant="gradient"
-                          color={online ? "green" : "blue-gray"}
-                          value={online ? "online" : "offline"}
-                          className="py-0.5 px-2 text-[11px] font-medium"
-                        />
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {date}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography
-                          as="a"
-                          href="#"
-                          className="text-xs font-semibold text-blue-gray-600"
-                        >
-                          Edit
-                        </Typography>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
-            </tbody>
-          </table>
-        </CardBody>
+        <div className=" mx-4 block justify-between sm:flex">
+          <div className="mb-3 max-w-2xl">
+            <Input label="Username" />
+          </div>
+        </div>
+        <div className="overflow-x-scroll px-0 pt-0 pb-2">
+          <Table
+            className="h-2/3"
+            columns={columns}
+            dataSource={data}
+            scroll={{
+              x: 1500,
+              y: 430,
+            }}
+          />
+        </div>
       </Card>
-      <Card>
-        <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-          <Typography variant="h6" color="white">
-            Projects Table
-          </Typography>
-        </CardHeader>
-        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-          <table className="w-full min-w-[640px] table-auto">
-            <thead>
-              <tr>
-                {["companies", "members", "budget", "completion", ""].map(
-                  (el) => (
-                    <th
-                      key={el}
-                      className="border-b border-blue-gray-50 py-3 px-5 text-left"
-                    >
-                      <Typography
-                        variant="small"
-                        className="text-[11px] font-bold uppercase text-blue-gray-400"
-                      >
-                        {el}
-                      </Typography>
-                    </th>
-                  )
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {projectsTableData.map(
-                ({ img, name, members, budget, completion }, key) => {
-                  const className = `py-3 px-5 ${
-                    key === projectsTableData.length - 1
-                      ? ""
-                      : "border-b border-blue-gray-50"
-                  }`;
-
-                  return (
-                    <tr key={name}>
-                      <td className={className}>
-                        <div className="flex items-center gap-4">
-                          <Avatar src={img} alt={name} size="sm" />
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-bold"
-                          >
-                            {name}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={className}>
-                        {members.map(({ img, name }, key) => (
-                          <Tooltip key={name} content={name}>
-                            <Avatar
-                              src={img}
-                              alt={name}
-                              size="xs"
-                              variant="circular"
-                              className={`cursor-pointer border-2 border-white ${
-                                key === 0 ? "" : "-ml-2.5"
-                              }`}
-                            />
-                          </Tooltip>
-                        ))}
-                      </td>
-                      <td className={className}>
-                        <Typography
-                          variant="small"
-                          className="text-xs font-medium text-blue-gray-600"
-                        >
-                          {budget}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <div className="w-10/12">
-                          <Typography
-                            variant="small"
-                            className="mb-1 block text-xs font-medium text-blue-gray-600"
-                          >
-                            {completion}%
-                          </Typography>
-                          <Progress
-                            value={completion}
-                            variant="gradient"
-                            color={completion === 100 ? "green" : "blue"}
-                            className="h-1"
-                          />
-                        </div>
-                      </td>
-                      <td className={className}>
-                        <Typography
-                          as="a"
-                          href="#"
-                          className="text-xs font-semibold text-blue-gray-600"
-                        >
-                          <EllipsisVerticalIcon
-                            strokeWidth={2}
-                            className="h-5 w-5 text-inherit"
-                          />
-                        </Typography>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
-            </tbody>
-          </table>
-        </CardBody>
-      </Card>
+      {openModal && (
+        <Drawer
+          title={dataRender.title}
+          placement="right"
+          width={isMobile ? "100%" : dataRender.width}
+          onClose={() => {
+            setOpenModal(false);
+          }}
+          open={openModal}
+        >
+          {dataRender.component}
+        </Drawer>
+      )}
     </div>
   );
 }
