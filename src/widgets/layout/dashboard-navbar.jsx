@@ -66,7 +66,7 @@ export function DashboardNavbar() {
               color="blue-gray"
               className="font-normal"
             >
-              {namePage.name}
+              {namePage?.name}
             </Typography>
           </Breadcrumbs>
         </div>

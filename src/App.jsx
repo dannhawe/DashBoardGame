@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Dashboard, Auth } from "@/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Button, DatePicker } from "antd";
 
 function App() {
   const queryClient = new QueryClient();
