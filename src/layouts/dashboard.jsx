@@ -12,9 +12,7 @@ export function Dashboard() {
   const { sidenavType } = controller;
   const username = useUserStore((state) => state.username);
   let navigate = useNavigate();
-  useEffect(() => {
-    if (!username) navigate("auth");
-  }, []);
+
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav routes={routes} brandImg={"/img/dashBoard/logo.png"} />
@@ -38,7 +36,7 @@ export function Dashboard() {
                 <Route exact path={path} element={element} />
               ))
           )}
-          <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard/home"  />} />
         </Routes>
         {/* <div className="text-blue-gray-600">
           <Footer />
