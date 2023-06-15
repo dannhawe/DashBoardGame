@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
 import {
@@ -9,11 +9,18 @@ import {
 } from "@/widgets/layout";
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import { useEffect } from "react";
+import useUserStore from "@/store/user";
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
-
+  const username = useUserStore((state) => state.username);
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (!username)
+      navigate('auth')
+  })
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav routes={routes} brandImg={"/img/dashBoard/logo.png"} />
